@@ -1,9 +1,14 @@
+from typing import Dict, Any
+
+
 class Student:
     def __init__(self, name, surname):
         self.name = name
         self.surname = surname
         self.courses_in_progress = []
         self.grades = {}
+        self.students = []
+
 
 
     def rate_ST(self, lecturer, course, grade):
@@ -40,13 +45,21 @@ class Lecturer(Mentor):
         super().__init__(name, surname)
         self.grades = {}
 
+
     def __str__(self):
         self.all_grades = []
         for grade in self.grades.values():
-            self.all_grades.extend(grade)
-            rating = sum(self.all_grades) / len(self.all_grades)
+             self.all_grades.extend(grade)
+        rating = sum(self.all_grades) / len(self.all_grades)
         return f'Имя: {self.name}'  '\n' f'Фамилия: {self.surname}' \
-        '\n' f'Средняя оценка за лекции: {round((rating),2)}'
+             '\n' f'Средняя оценка за лекции: {round((rating),2)}'
+
+    def __lt__(self,other):
+         self.all_grades = []
+         for grade in self.grades.values():
+            self.all_grades.extend(grade)
+         rating = sum(self.all_grades) / len(self.all_grades)
+         return self.rating > other.rating
 
 
 class Reviewer(Mentor):
@@ -65,6 +78,8 @@ class Reviewer(Mentor):
 
     def __str__(self):
         return f'Имя: {self.name}'  '\n' f'Фамилия: {self.surname}'
+
+
 
 
 first_student = Student('Ruoy', 'Eman')
@@ -114,20 +129,24 @@ second_student.rate_ST(cool_Lecturer, 'GIT', 6)
 
 second_student.rate_ST(m_Lecturer, 'Python', 4)
 second_student.rate_ST(m_Lecturer, 'GIT', 10)
+students = []
+students.append(first_student)
+students.append(second_student)
 
-print(first_student.grades)
-print(second_student.grades)
-print(cool_Lecturer.grades)
-print(m_Lecturer.grades)
+def av(students, courses):
+    all_grades = {}
+    for student in students:
+        if grades[courses] == courses:
+            for grades in grades.values():
+                all_grades.extend(grades)
+            rating = sum(all_grades) / len(all_grades)
+    return rating
 print(cool_Reviewer)
 print(cool_Lecturer)
 print(first_student)
 print(second_student)
 print(m_Lecturer)
+print(av(students, 'Python'))
 
-students = []
-students.append(first_student.grades)
-students.append(second_student.grades)
-print(students)
 
 
