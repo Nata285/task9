@@ -55,11 +55,13 @@ class Lecturer(Mentor):
              '\n' f'Средняя оценка за лекции: {round((rating),2)}'
 
     def __lt__(self,other):
-         self.all_grades = []
-         for grade in self.grades.values():
-            self.all_grades.extend(grade)
-         rating = sum(self.all_grades) / len(self.all_grades)
-         return self.rating > other.rating
+        if not isinstance(other,Lecturer(Mentor)):
+            print('Not')
+            self.all_grades = []
+            for grade in self.grades.values():
+                self.all_grades.extend(grade)
+                rating = sum(self.all_grades) / len(self.all_grades)
+            return other.rating > self.rating
 
 
 class Reviewer(Mentor):
@@ -130,23 +132,35 @@ second_student.rate_ST(cool_Lecturer, 'GIT', 6)
 second_student.rate_ST(m_Lecturer, 'Python', 4)
 second_student.rate_ST(m_Lecturer, 'GIT', 10)
 students = []
-students.append(first_student)
-students.append(second_student)
+students.append(first_student.grades)
+students.append(second_student.grades)
+def av_st(courses):
+    av_ball = 0
+    students_2 = []
+    for dict in students:
+        av_ball =sum(dict[courses])/len(dict[courses])
+        students_2.append(av_ball)
+    return sum(students_2)/len(students_2)
 
-def av(students, courses):
-    all_grades = {}
-    for student in students:
-        if grades[courses] == courses:
-            for grades in grades.values():
-                all_grades.extend(grades)
-            rating = sum(all_grades) / len(all_grades)
-    return rating
+Lecturers = []
+Lecturers.append(cool_Lecturer.grades)
+Lecturers.append(m_Lecturer.grades)
+def av_Lec(courses):
+    av_ball = 0
+    Lecturers_2 = []
+    for dict in Lecturers:
+        av_ball =sum(dict[courses])/len(dict[courses])
+        Lecturers_2.append(av_ball)
+    return sum(Lecturers_2)/len(Lecturers_2)
+print(av_Lec('Python'))
+
 print(cool_Reviewer)
-print(cool_Lecturer)
 print(first_student)
 print(second_student)
+print(cool_Lecturer)
 print(m_Lecturer)
-print(av(students, 'Python'))
+print(b_Reviewer)
+
 
 
 
