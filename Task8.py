@@ -44,6 +44,7 @@ class Lecturer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
         self.grades = {}
+        self.rating = []
 
 
     def __str__(self):
@@ -54,14 +55,20 @@ class Lecturer(Mentor):
         return f'Имя: {self.name}'  '\n' f'Фамилия: {self.surname}' \
              '\n' f'Средняя оценка за лекции: {round((rating),2)}'
 
+    def rating(self):
+        self.all_grades = []
+        for grade in self.grades.values():
+            self.all_grades.extend(grade)
+            av_r=(self.all_grades) / len(self.all_grades)
+            self.rating.append(av_r)
+            return av_r
+
     def __lt__(self,other):
-        if not isinstance(other,Lecturer(Mentor)):
-            print('Not')
-            self.all_grades = []
-            for grade in self.grades.values():
-                self.all_grades.extend(grade)
-                rating = sum(self.all_grades) / len(self.all_grades)
-            return other.rating > self.rating
+         self.all_grades = []
+         for grade in self.grades.values():
+            self.all_grades.extend(grade)
+         rating = sum(self.all_grades) / len(self.all_grades)
+         return self.rating > other.rating
 
 
 class Reviewer(Mentor):
@@ -134,13 +141,21 @@ second_student.rate_ST(m_Lecturer, 'GIT', 10)
 students = []
 students.append(first_student.grades)
 students.append(second_student.grades)
-def av_st(courses):
-    av_ball = 0
-    students_2 = []
-    for dict in students:
-        av_ball =sum(dict[courses])/len(dict[courses])
-        students_2.append(av_ball)
-    return sum(students_2)/len(students_2)
+def av_st(student):
+    all_ball=[]
+    all_ball_2 = []
+    for course in student.grades.values():
+        all_ball.extend(student.grades.values())
+        for grade in all_ball:
+            all_ball_2.extend(grade)
+            rating = sum(all_ball_2)/len(all_ball_2)
+    return rating
+
+def __lt__(first_student, second_student):
+    return av_st(first_student)< av_st(second_student)
+print(av_st(first_student)> av_st(second_student))
+print(av_st(first_student))
+print(av_st(second_student))
 
 Lecturers = []
 Lecturers.append(cool_Lecturer.grades)
@@ -152,11 +167,17 @@ def av_Lec(courses):
         av_ball =sum(dict[courses])/len(dict[courses])
         Lecturers_2.append(av_ball)
     return sum(Lecturers_2)/len(Lecturers_2)
+
+
+
+
+
+print(av_st(first_student))
 print(av_Lec('Python'))
 
 print(cool_Reviewer)
-print(first_student)
-print(second_student)
+print(first_student.grades)
+print(second_student.grades)
 print(cool_Lecturer)
 print(m_Lecturer)
 print(b_Reviewer)
