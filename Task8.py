@@ -55,13 +55,6 @@ class Lecturer(Mentor):
         return f'Имя: {self.name}'  '\n' f'Фамилия: {self.surname}' \
              '\n' f'Средняя оценка за лекции: {round((rating),2)}'
 
-    def rating(self):
-        self.all_grades = []
-        for grade in self.grades.values():
-            self.all_grades.extend(grade)
-            av_r=(self.all_grades) / len(self.all_grades)
-            self.rating.append(av_r)
-            return av_r
 
     def __lt__(self,other):
          self.all_grades = []
@@ -138,9 +131,10 @@ second_student.rate_ST(cool_Lecturer, 'GIT', 6)
 
 second_student.rate_ST(m_Lecturer, 'Python', 4)
 second_student.rate_ST(m_Lecturer, 'GIT', 10)
-students = []
-students.append(first_student.grades)
-students.append(second_student.grades)
+students_list = []
+students_list.append(first_student.grades)
+students_list.append(second_student.grades)
+
 def av_st(student):
     all_ball=[]
     all_ball_2 = []
@@ -154,34 +148,48 @@ def av_st(student):
 def __lt__(first_student, second_student):
     return av_st(first_student)< av_st(second_student)
 print(av_st(first_student)> av_st(second_student))
-print(av_st(first_student))
-print(av_st(second_student))
 
-Lecturers = []
-Lecturers.append(cool_Lecturer.grades)
-Lecturers.append(m_Lecturer.grades)
+
+Lecturers_list = []
+Lecturers_list.append(cool_Lecturer.grades)
+Lecturers_list.append(m_Lecturer.grades)
 def av_Lec(courses):
     av_ball = 0
     Lecturers_2 = []
-    for dict in Lecturers:
+    for dict in Lecturers_list:
         av_ball =sum(dict[courses])/len(dict[courses])
         Lecturers_2.append(av_ball)
     return sum(Lecturers_2)/len(Lecturers_2)
+def __lt__(cool_Lecturer, m_Lecturer):
+    return av_st(cool_Lecturer)< av_st(m_Lecturer)
+print(av_st(cool_Lecturer)> av_st(m_Lecturer))
+def average_homework_grades_by_course(students_list, course_name):
+    grades_list = []
+    counter = 0
+    pre_result = 0
+    for stud in students_list:
+        grades_list.extend(stud[course_name])
+    return sum(grades_list)/len(grades_list)
 
+print(average_homework_grades_by_course(students_list,'Python'))
 
+def average_homework_grades_by_course(Lecturers_list, course_name):
+    grades_list = []
+    counter = 0
+    pre_result = 0
+    for stud in Lecturers_list:
+        grades_list.extend(stud[course_name])
+    return sum(grades_list)/len(grades_list)
 
+print(average_homework_grades_by_course(Lecturers_list,'Python'))
 
-
-print(av_st(first_student))
-print(av_Lec('Python'))
 
 print(cool_Reviewer)
-print(first_student.grades)
-print(second_student.grades)
 print(cool_Lecturer)
 print(m_Lecturer)
 print(b_Reviewer)
-
+print(first_student)
+print(second_student)
 
 
 
